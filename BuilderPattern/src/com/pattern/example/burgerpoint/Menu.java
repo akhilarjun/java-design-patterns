@@ -1,5 +1,8 @@
 package com.pattern.example.burgerpoint;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.pattern.example.burgerpoint.blueprints.Meal;
 import com.pattern.example.burgerpoint.menu.Burger;
 import com.pattern.example.burgerpoint.menu.Drink;
@@ -21,11 +24,29 @@ public class Menu {
 	
 	private int totalPrice = 0;
 	
+	private List<Meal> meals = new ArrayList<>();
+	
 	public int getTotalPrice() {
 		return totalPrice;
 	}
 	
-	public Meal prepareHappyMealVeg() {
+	public void display() {
+		if(!meals.isEmpty()) {
+			meals.forEach(meal -> meal.display());
+		} else {
+			System.out.println("Menu is blank! Prepare items first.");
+		}
+	}
+	
+	public List<Meal> getMeals() {
+		return meals;
+	}
+	
+	public void clear() {
+		meals = new ArrayList<>();
+	}
+	
+	public Menu prepareHappyMealVeg() {
 		Burger burger = new Burger.Builder()
 							.preparePatty(PattyType.VEG)
 							.prepareToppings(new Toppings[] {Toppings.ONION, Toppings.CHEESE, Toppings.LETTUCE})
@@ -38,11 +59,12 @@ public class Menu {
 		happyMeal.addItem(burger);
 		happyMeal.addItem(drink);
 		happyMeal.addItem(fries);
+		meals.add(happyMeal);
 		totalPrice += happyMeal.getPrice();
-		return happyMeal;
+		return this;
 	}
 	
-	public Meal prepareHappyMealNonVeg() {
+	public Menu prepareHappyMealNonVeg() {
 		Burger burger = new Burger.Builder()
 							.preparePatty(PattyType.CHICKEN)
 							.prepareToppings(new Toppings[] {Toppings.ONION, Toppings.CHEESE, Toppings.LETTUCE})
@@ -55,11 +77,12 @@ public class Menu {
 		happyMeal.addItem(burger);
 		happyMeal.addItem(drink);
 		happyMeal.addItem(fries);
+		meals.add(happyMeal);
 		totalPrice += happyMeal.getPrice();
-		return happyMeal;
+		return this;
 	}
 	
-	public Meal prepareZingerMealVeg() {
+	public Menu prepareZingerMealVeg() {
 		Burger burger = new Burger.Builder()
 							.preparePatty(PattyType.ZINGER_VEG)
 							.prepareToppings(new Toppings[] {Toppings.ONION, Toppings.CHEESE, Toppings.LETTUCE})
@@ -72,11 +95,12 @@ public class Menu {
 		zingerMeal.addItem(burger);
 		zingerMeal.addItem(drink);
 		zingerMeal.addItem(fries);
+		meals.add(zingerMeal);
 		totalPrice += zingerMeal.getPrice();
-		return zingerMeal;
+		return this;
 	}
 	
-	public Meal prepareZingerMealNonVeg() {
+	public Menu prepareZingerMealNonVeg() {
 		Burger burger = new Burger.Builder()
 							.preparePatty(PattyType.ZINGER_CHICKEN)
 							.prepareToppings(new Toppings[] {Toppings.ONION, Toppings.CHEESE, Toppings.LETTUCE})
@@ -89,28 +113,32 @@ public class Menu {
 		zingerMeal.addItem(burger);
 		zingerMeal.addItem(drink);
 		zingerMeal.addItem(fries);
+		meals.add(zingerMeal);
 		totalPrice += zingerMeal.getPrice();
-		return zingerMeal;
+		return this;
 	}
 	
-	public Meal prepareDrink(DrinkType type) {
+	public Menu prepareDrink(DrinkType type) {
 		Meal drink = new Meal();
 		drink.addItem(new Drink.Builder().prepare(type));
+		meals.add(drink);
 		totalPrice += drink.getPrice();
-		return drink;
+		return this;
 	}
 	
-	public Meal prepareBurger(PattyType type, Toppings[] toppings) {
+	public Menu prepareBurger(PattyType type, Toppings[] toppings) {
 		Meal burger = new Meal();
 		burger.addItem(new Burger.Builder().preparePatty(type).prepareToppings(toppings).prepare());
+		meals.add(burger);
 		totalPrice += burger.getPrice();
-		return burger;
+		return this;
 	}
 	
-	public Meal prepareFries(FriesType type) {
+	public Menu prepareFries(FriesType type) {
 		Meal fries = new Meal();
 		fries.addItem(new Fries.Builder().prepare(type));
+		meals.add(fries);
 		totalPrice += fries.getPrice();
-		return fries;
+		return this;
 	}
 }

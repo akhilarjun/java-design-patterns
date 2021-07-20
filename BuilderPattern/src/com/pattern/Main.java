@@ -1,7 +1,6 @@
 package com.pattern;
 
 import com.pattern.example.burgerpoint.Menu;
-import com.pattern.example.burgerpoint.blueprints.Meal;
 import com.pattern.example.burgerpoint.menu.options.DrinkType;
 import com.pattern.example.burgerpoint.menu.options.FriesType;
 import com.pattern.example.burgerpoint.menu.options.PattyType;
@@ -28,19 +27,19 @@ public class Main {
 	
 	public static void main(String[] args) {
 		Menu menu = new Menu();
-		Meal happyMealVeg = menu.prepareHappyMealVeg();
-		happyMealVeg.display();
-		Meal zingerMealNonVeg = menu.prepareZingerMealNonVeg();
-		zingerMealNonVeg.display();
-		Meal burger = menu.prepareBurger(PattyType.DOUBLE_CHICKEN, 
-				new Toppings[] {Toppings.CHEESE, Toppings.CHEESE, Toppings.ONION, Toppings.LETTUCE});
-		burger.display();
-		Meal fries = menu.prepareFries(FriesType.TANDOORI_SPECIAL);
-		fries.display();
-		Meal coldCoffee = menu.prepareDrink(DrinkType.COLD_COFEE);
-		coldCoffee.display();
-		Meal espresso = menu.prepareDrink(DrinkType.ESPRESSO);
-		espresso.display();
+		
+		menu.prepareHappyMealVeg()
+			.prepareZingerMealNonVeg()
+			.prepareBurger(PattyType.DOUBLE_CHICKEN, 
+				new Toppings[] {Toppings.CHEESE, Toppings.CHEESE, Toppings.ONION, 
+						Toppings.LETTUCE, Toppings.PICKLE, Toppings.PICKLE})
+			.prepareFries(FriesType.TANDOORI_SPECIAL)
+			.prepareFries(FriesType.CLASSIC)
+			.prepareDrink(DrinkType.COLD_COFEE)
+			.prepareDrink(DrinkType.ESPRESSO);
+		
+		menu.display();
+		
 		System.out.println("Total Bill: " + menu.getTotalPrice() + "Rs");
 	}
 }
